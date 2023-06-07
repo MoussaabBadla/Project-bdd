@@ -5,6 +5,11 @@
  */
 package databasedemo;
 
+import javax.swing.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 public class mainForm extends javax.swing.JFrame {
     public mainForm() {
     initComponents();
@@ -28,6 +33,8 @@ public class mainForm extends javax.swing.JFrame {
         jButton13 = new javax.swing.JButton();
         jButton10 = new javax.swing.JButton();
         jButton14 = new javax.swing.JButton();
+        jButton15 = new javax.swing.JButton();
+        jButton16 = new javax.swing.JButton();
 
 
 
@@ -60,11 +67,74 @@ public class mainForm extends javax.swing.JFrame {
             }
         });
 
+        jButton15.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+jButton15.setText("Requete 1");
+jButton15.addActionListener(new java.awt.event.ActionListener() {
+public void actionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
 
 
 
 
-        jButton5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+        String   statementString = "SELECT * FROM Etud  WHERE matricule_etu IN (SELECT  matricule_etu FROM EtudUnite WHERE note_examen=20)";
+
+
+
+        connection=DB.connect(DB.user , DB.pass);
+        statement=connection.prepareStatement(statementString);
+        resultSet=statement.executeQuery();
+        resultSet.next();
+        System.out.println(resultSet.getString("nom_etu"));
+
+
+        final  String nom_etu = resultSet.getString("nom_etu");
+        final  String prenom_etu = resultSet.getString("prenom_etu");
+        JOptionPane.showMessageDialog(null, "name : " + nom_etu + "\n" + " prenom : " + prenom_etu   );
+
+    }catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "no student have 20 in examen"   );
+
+    }
+
+}
+});
+jButton16.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
+jButton16.setText("Requete 2");
+jButton16.addActionListener(new java.awt.event.ActionListener() {
+public void actionPerformed(java.awt.event.ActionEvent evt) {
+    try {
+
+        Connection connection = null;
+        PreparedStatement statement = null;
+        ResultSet resultSet = null;
+        String   statementString = "SELECT * FROM Etud  WHERE matricule_etu NOT IN (SELECT  matricule_etu FROM EtudUnite WHERE CODE_UNITE IN (SELECT code_unite FROM Unite WHERE libelle='POO'))";
+
+        connection=DB.connect(DB.user , DB.pass);
+        statement=connection.prepareStatement(statementString);
+        resultSet=statement.executeQuery();
+        resultSet.next();
+        System.out.println(resultSet.getString("nom_etu"));
+
+
+        final  String nom_etu = resultSet.getString("nom_etu");
+        final  String prenom_etu = resultSet.getString("prenom_etu");
+        JOptionPane.showMessageDialog(null, "name : " + nom_etu + "\n" + " prenom : " + prenom_etu   );
+
+    } catch (Exception e) {
+        e.printStackTrace();
+        JOptionPane.showMessageDialog(null, "no student found "   );
+
+
+    }
+}
+
+});
+ jButton5.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
 
         jButton6.setFont(new java.awt.Font("Tahoma", 1, 16)); // NOI18N
         jButton6.setText("Display All Teacher");
@@ -156,34 +226,34 @@ public class mainForm extends javax.swing.JFrame {
                     .addComponent(jButton3)
                         .addComponent(jButton6)
                         .addComponent(jButton7)
-                        .addComponent(jButton8).addComponent(jButton9).addComponent(jButton10).addComponent(jButton11).addComponent(jButton12).addComponent(jButton13).addComponent(jButton14)
+                        .addComponent(jButton8).addComponent(jButton9).addComponent(jButton10).addComponent(jButton11).addComponent(jButton12).addComponent(jButton13).addComponent(jButton14).addComponent(jButton15).addComponent(jButton16)
                      ).addComponent(jButton5)
 
             )
         );
 
-        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3 , jButton6 , jButton7 , jButton8 ,jButton9 ,  jButton10,jButton11 , jButton12 , jButton13 , jButton14   , jButton5});
+        jPanel1Layout.linkSize(javax.swing.SwingConstants.HORIZONTAL, new java.awt.Component[] {jButton1, jButton2, jButton3 , jButton6 , jButton7 , jButton8 ,jButton9 ,  jButton10,jButton11 , jButton12 , jButton13 , jButton14 , jButton15 , jButton16   , jButton5});
 
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(20, 20, 20)
-                .addComponent(jButton1)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton3)
+                .addComponent(jButton1).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton2).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton3).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton6).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton7).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton8).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jButton8)                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+
                     .addComponent(jButton9).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jButton10).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jButton11).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jButton12).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jButton13).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                     .addComponent(jButton14).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                    .addComponent(jButton5).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED))
+                    .addComponent(jButton15).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jButton16).addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                    .addComponent(jButton5))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -317,6 +387,10 @@ public class mainForm extends javax.swing.JFrame {
     private  javax.swing.JButton jButton12;
     private  javax.swing.JButton jButton13;
     private  javax.swing.JButton jButton14;
+
+    private  javax.swing.JButton jButton15;
+    private  javax.swing.JButton jButton16;
+
     private javax.swing.JPanel jPanel1;
     // End of variables declaration//GEN-END:variables
 }
